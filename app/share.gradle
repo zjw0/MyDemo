@@ -1,0 +1,62 @@
+/**
+ * ShareSDK分享
+ * 官网：http://www.mob.com/
+ *
+ * 文档地址：
+ * http://www.mob.com/wiki/detailed?wiki=ShareSDK_Android_Title_ksjc&id=14
+ *
+ * 使用方法：
+ * 1.打开项目根目录的build.gradle，在buildscript–>dependencies 模块下面添加 classpath
+ * classpath "com.mob.sdk:MobSDK:2018.0319.1724"
+ * 2、app的gradle下添加
+ * apply from: 'share.gradle'
+ * 3、新建xxx.xxx.xxx.share包
+ * 复制工具类ShareSdkUtils和实体类ShareData到该包下
+ * 4、完善下面devInfo中的各分享平台相关信息
+ *
+ */
+
+//2.在使用到Mob产品的module下面的build.gradle文件里面添加如下引用
+apply plugin: 'com.mob.sdk'
+
+//3.添加MobSDK方法，配置mob的key和秘钥
+// （与第2步是一个gradle中；注意：MobSDK方法是配置到文件根目录，与android并列，不要配置到android里面哦）
+MobSDK {
+    appKey ""//mob官方申请的Appkey
+    appSecret ""//mob官方申请的Appkey对应的AppSecret
+    //4.添加ShareSDK平台，Gradle集成方式可以在Mob产品的module下面的build.gradle文件里面配置ShareSDK各个社交平台的key信息
+    ShareSDK {
+        gui false //ShareSDK默认会添加OnekeyShare库，如果您不需要这个库，可以在ShareSDK下设置“gui false”来关闭OnekeyShare
+        loopShare false// 是否闭环分享
+        devInfo {//来自社交平台的应用信息，
+            // 完整的各个平台参数：https://github.com/MobClub/ShareSDK-for-Android/blob/master/SampleFresh/MobSDK.gradle
+            // 具体字段参数说明：http://wiki.mob.com/sdk-share-android-3-0-0/
+            QQ {
+                appId ""
+                appKey ""
+                bypassApproval false //是否绕过审核
+            }
+            QZone {
+                appId ""
+                appKey ""
+                bypassApproval false
+            }
+            Wechat {
+                appId ""
+                appSecret ""
+                //BypassApproval是绕过审核的标记，设置为true后AppId将被忽略，故不经过审核的应用也可以执行分享，但是仅限于分享文字和图片，不能分享其他类型，默认值为false。
+                bypassApproval false
+            }
+            WechatMoments {
+                appId ""
+                appSecret ""
+                bypassApproval false
+            }
+            SinaWeibo {
+                appKey ""
+                appSecret ""
+                callbackUri ""//微博开放平台：应用信息-高级信息-OAuth2.0授权设置的RedirectUrl
+            }
+        }
+    }
+}
